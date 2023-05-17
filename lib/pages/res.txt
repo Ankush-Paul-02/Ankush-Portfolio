@@ -1,0 +1,17 @@
+AnimatedTextKit(
+                            animatedTexts: [
+                              TyperAnimatedText(
+                                "HOLA, I'M ANKUSH PAUL",
+                                textStyle: const TextStyle(
+                                  fontSize: 30,
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                speed: const Duration(milliseconds: 500),
+                              ),
+                            ],
+                            totalRepeatCount: 1,
+                            pause: const Duration(milliseconds: 1000),
+                            displayFullTextOnTap: true,
+                            stopPauseOnTap: true,
+                          ),
