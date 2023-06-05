@@ -4,22 +4,27 @@ import 'app_bar_title.dart';
 
 class HeaderWebMenu extends StatelessWidget {
   const HeaderWebMenu({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    final isSmallScreen = MediaQuery.of(context).size.width <
+        600; // Adjust the breakpoint as needed
+
+    return Row(
       children: [
-        AppBarTitle(title: 'Home'),
-        SizedBox(width: kDefaultPadding),
-        AppBarTitle(title: 'About'),
-        SizedBox(width: kDefaultPadding),
-        AppBarTitle(title: 'Projects'),
-        SizedBox(width: kDefaultPadding),
-        AppBarTitle(title: 'Contact'),
-        SizedBox(width: kDefaultPadding),
-        AppBarTitle(title: 'Resume'),
+        if (!isSmallScreen) ...[
+          const AppBarTitle(title: 'Home'),
+          const SizedBox(width: kDefaultPadding),
+          const AppBarTitle(title: 'About'),
+          const SizedBox(width: kDefaultPadding),
+          const AppBarTitle(title: 'Projects'),
+          const SizedBox(width: kDefaultPadding),
+          const AppBarTitle(title: 'Contact'),
+          const SizedBox(width: kDefaultPadding),
+          const AppBarTitle(title: 'Resume'),
+        ],
       ],
     );
   }

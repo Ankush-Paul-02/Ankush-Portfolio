@@ -4,19 +4,21 @@ import 'header_web_menu.dart';
 
 class Header extends StatelessWidget {
   const Header({
-    super.key,
+    Key? key,
     required this.size,
-  });
+  }) : super(key: key);
 
   final Size size;
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+    final isSmallScreen = size.width < 600; // Adjust the breakpoint as needed
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: Row(
         children: [
-          HeaderWebMenu(),
+          if (!isSmallScreen) const HeaderWebMenu(),
         ],
       ),
     );
