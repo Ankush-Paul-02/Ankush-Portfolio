@@ -1,9 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:my_portfolio/pages/widgets/body_screen.dart';
 import 'package:my_portfolio/pages/widgets/drawer_screen.dart';
 import 'package:my_portfolio/pages/widgets/header.dart';
 import 'package:my_portfolio/pages/widgets/leading_logo.dart';
-import 'package:my_portfolio/pages/widgets/whole_intro.dart';
+import 'package:my_portfolio/pages/widgets/menu_button.dart';
+import 'package:my_portfolio/utils/rive_utils.dart';
 import 'package:rive/rive.dart';
+import '../models/rive_assets.dart';
 import '../utils/app_color.dart';
 import '../utils/dimensions.dart';
 
@@ -14,11 +19,36 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  RiveAsset selectedMenu = drawerNav.first;
+  late SMIBool isSideBarClosed;
+  bool isSideMenuClosed = true;
 
-  void _openDrawer() {
-    _scaffoldKey.currentState?.openDrawer();
+  late AnimationController _animationController;
+  late Animation<double> animation;
+  late Animation<double> scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 200))
+      ..addListener(() {
+        setState(() {});
+      });
+
+    animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: _animationController, curve: Curves.fastOutSlowIn));
+
+    scaleAnimation = Tween<double>(begin: 1, end: 0.8).animate(CurvedAnimation(
+        parent: _animationController, curve: Curves.fastOutSlowIn));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _animationController.dispose();
   }
 
   @override
@@ -28,47 +58,74 @@ class _HomePageState extends State<HomePage> {
     final isTabletScreen = size.width < 900;
 
     return Scaffold(
-      key: _scaffoldKey,
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         toolbarHeight: isSmallScreen ? 120 : 65,
         backgroundColor: AppColors.backgroundColor,
         elevation: 0,
         title: isSmallScreen
-            ? Container(
-                height: 60,
-                width: 60,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 2,
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    'A',
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Kizard',
-                      color: Colors.white,
+            ? isSideMenuClosed
+                ? Container(
+                    height: 60,
+                    width: 60,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 2,
+                      ),
                     ),
-                  ),
-                ),
-              )
-            : const LeadingLogo(),
+                    child: const Center(
+                      child: Text(
+                        'A',
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Kizard',
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  )
+                : null
+            : isSideMenuClosed && !isSmallScreen
+                ? const LeadingLogo()
+                : null,
         centerTitle: !isSmallScreen,
         leading: (isSmallScreen || isTabletScreen)
-            ? IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: _openDrawer,
+            ? Padding(
+                padding: EdgeInsets.only(
+                    top: isSmallScreen ? 38 : 10, left: kDefaultPadding),
+                child: Stack(
+                  children: [
+                    MenuButton(
+                      press: () {
+                        isSideBarClosed.value = !isSideBarClosed.value;
+                        if (isSideMenuClosed) {
+                          _animationController.forward();
+                        } else {
+                          _animationController.reverse();
+                        }
+                        setState(() {
+                          isSideMenuClosed = isSideBarClosed.value;
+                        });
+                      },
+                      riverOnInit: (artboard) {
+                        StateMachineController controller =
+                            RiveUtils.getRiveController(artboard,
+                                stateMachineName: "State Machine");
+                        isSideBarClosed =
+                            controller.findSMI("isOpen") as SMIBool;
+                        isSideBarClosed.value = true;
+                      },
+                    ),
+                  ],
+                ),
               )
             : null,
         actions:
             (!isSmallScreen && !isTabletScreen) ? [Header(size: size)] : null,
       ),
-      drawer: (isSmallScreen || isTabletScreen) ? const DrawerScreen() : null,
 
       /**
        * Body
@@ -83,34 +140,41 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: isSmallScreen ? kDefaultPadding : size.width * 0.08,
-                vertical: isSmallScreen ? kDefaultPadding : size.height * 0.08,
+          if (isSmallScreen || isTabletScreen)
+            if (isSideMenuClosed == false)
+              AnimatedPositioned(
+                curve: Curves.fastOutSlowIn,
+                duration: const Duration(milliseconds: 200),
+                left: isSideMenuClosed ? -288 : 0,
+                height: size.height,
+                width: 288,
+                child: const DrawerScreen(),
               ),
-              child: Column(
-                children: [
-                  if (isSmallScreen) // Show image at the top for small screens, tablets, and web
-                    SizedBox(
-                      height: size.height * 0.4,
-                      child: Image.asset(
-                        'assets/images/profile.png',
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  MyIntro(
-                      isSmallScreen: isSmallScreen,
-                      isTabletScreen: isTabletScreen,
-                      size: size),
-                  Divider(
-                    color: AppColors.glowColor,
-                    thickness: 0.1,
+          if (isSmallScreen || isTabletScreen)
+            Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.001)
+                ..rotateY(animation.value - 30 * animation.value * pi / 180),
+              child: Transform.translate(
+                offset: Offset(animation.value * 265, 0),
+                child: Transform.scale(
+                  scale: scaleAnimation.value,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(24)),
+                    child: BodyScreen(
+                        isSmallScreen: isSmallScreen,
+                        size: size,
+                        isTabletScreen: isTabletScreen),
                   ),
-                ],
+                ),
               ),
-            ),
-          )
+            )
+          else
+            BodyScreen(
+                isSmallScreen: isSmallScreen,
+                size: size,
+                isTabletScreen: isTabletScreen),
         ],
       ),
     );
