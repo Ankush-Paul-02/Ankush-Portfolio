@@ -1,14 +1,20 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/pages/widgets/social_button.dart';
+import 'package:my_portfolio/utils/app_urls.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/dimensions.dart';
 
-class SocialPages extends StatelessWidget {
+class SocialPages extends StatefulWidget {
   const SocialPages({
     super.key,
   });
 
+  @override
+  State<SocialPages> createState() => _SocialPagesState();
+}
+
+class _SocialPagesState extends State<SocialPages> {
   @override
   Widget build(BuildContext context) {
     return FadeInUp(
@@ -17,11 +23,11 @@ class SocialPages extends StatelessWidget {
           alignment: WrapAlignment.start,
           spacing: kDefaultPadding / 2,
           children: [
-            SocialButton(icon: AppAssets.facebook),
-            SocialButton(icon: AppAssets.instagram),
-            SocialButton(icon: AppAssets.github),
-            SocialButton(icon: AppAssets.linkedin),
-            SocialButton(icon: AppAssets.twitter),
+            SocialButton(icon: AppAssets.facebook, url: AppUrls.fbUrl),
+            SocialButton(icon: AppAssets.instagram, url: AppUrls.instaUrl),
+            SocialButton(icon: AppAssets.github, url: AppUrls.githubUrl),
+            SocialButton(icon: AppAssets.linkedin, url: AppUrls.linkedinUrl),
+            SocialButton(icon: AppAssets.twitter, url: AppUrls.twitterUrl),
           ],
         ));
   }

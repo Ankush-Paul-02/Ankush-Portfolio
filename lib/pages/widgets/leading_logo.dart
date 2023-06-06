@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-
 import '../../utils/dimensions.dart';
 
 class LeadingLogo extends StatelessWidget {
@@ -53,6 +52,7 @@ class LeadingLogo extends StatelessWidget {
               minFontSize: 16,
               style: TextStyle(
                 fontSize: 16,
+                fontWeight: FontWeight.w600,
                 color: Colors.grey,
               ),
             ),

@@ -1,14 +1,10 @@
-import 'package:animate_do/animate_do.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/pages/widgets/drawer_screen.dart';
 import 'package:my_portfolio/pages/widgets/header.dart';
 import 'package:my_portfolio/pages/widgets/leading_logo.dart';
-import 'package:my_portfolio/pages/widgets/social_pages.dart';
+import 'package:my_portfolio/pages/widgets/whole_intro.dart';
 import 'package:rive/rive.dart';
-
 import '../utils/app_color.dart';
-import '../utils/app_text_style.dart';
 import '../utils/dimensions.dart';
 
 class HomePage extends StatefulWidget {
@@ -35,7 +31,7 @@ class _HomePageState extends State<HomePage> {
       key: _scaffoldKey,
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        toolbarHeight: isSmallScreen ? 100 : 65,
+        toolbarHeight: isSmallScreen ? 120 : 65,
         backgroundColor: AppColors.backgroundColor,
         elevation: 0,
         title: isSmallScreen
@@ -90,95 +86,31 @@ class _HomePageState extends State<HomePage> {
           SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: isSmallScreen ? kDefaultPadding : size.width * 0.2,
-                vertical: isSmallScreen ? kDefaultPadding : size.height * 0.2,
+                horizontal: isSmallScreen ? kDefaultPadding : size.width * 0.08,
+                vertical: isSmallScreen ? kDefaultPadding : size.height * 0.08,
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: kDefaultPadding * 2),
-                  FadeInDown(
-                    duration: const Duration(milliseconds: 1200),
-                    child: Text(
-                      'Hola, It\'s Me',
-                      style: AppTextStyle.monteserratStyle(
-                        color: Colors.white,
-                        fontSize: isSmallScreen ? 24 : 40,
+                  if (isSmallScreen) // Show image at the top for small screens, tablets, and web
+                    SizedBox(
+                      height: size.height * 0.4,
+                      child: Image.asset(
+                        'assets/images/profile.png',
+                        fit: BoxFit.contain,
                       ),
                     ),
+                  MyIntro(
+                      isSmallScreen: isSmallScreen,
+                      isTabletScreen: isTabletScreen,
+                      size: size),
+                  Divider(
+                    color: AppColors.glowColor,
+                    thickness: 0.1,
                   ),
-                  Constants.sizedBox(height: 15),
-                  FadeInRight(
-                    duration: const Duration(milliseconds: 1400),
-                    child: Text(
-                      'Ankush Paul',
-                      style: AppTextStyle.headLineTextStyle(
-                        fontSize: isSmallScreen ? 20 : 24,
-                      ),
-                    ),
-                  ),
-                  Constants.sizedBox(height: 15),
-                  FadeInLeft(
-                    duration: const Duration(milliseconds: 1400),
-                    child: Wrap(
-                      children: [
-                        Text(
-                          'And I\'m a ',
-                          style: AppTextStyle.monteserratStyle(
-                            color: Colors.white,
-                            fontSize: isSmallScreen
-                                ? 18
-                                : isTabletScreen
-                                    ? 28
-                                    : 32,
-                          ),
-                        ),
-                        AnimatedTextKit(
-                          animatedTexts: [
-                            TyperAnimatedText(
-                              'Flutter Developer',
-                              textStyle: AppTextStyle.monteserratStyle(
-                                color: const Color(0xff6A01FB),
-                                fontSize: isSmallScreen
-                                    ? 18
-                                    : isTabletScreen
-                                        ? 28
-                                        : 32,
-                              ),
-                            ),
-                          ],
-                          totalRepeatCount: 50,
-                          pause: const Duration(milliseconds: 1000),
-                          displayFullTextOnTap: true,
-                          stopPauseOnTap: true,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Constants.sizedBox(height: 15),
-                  FadeInDown(
-                    duration: const Duration(milliseconds: 1600),
-                    child: SizedBox(
-                      width: isSmallScreen ? size.width : size.width * 0.5,
-                      child: Text(
-                        'I aspire to a challenging career in Software Development to use my learned skills and experience for the best result.',
-                        style: AppTextStyle.normalStyle(
-                          fontSize: isSmallScreen ? 20 : 26,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Constants.sizedBox(height: 22),
-
-                  /**
-                   * Social Pages
-                   */
-                  const SocialPages(),
-                  Constants.sizedBox(height: 18),
                 ],
               ),
             ),
-          ),
+          )
         ],
       ),
     );
