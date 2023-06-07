@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/pages/widgets/whole_intro.dart';
-import '../../utils/app_color.dart';
-import '../../utils/dimensions.dart';
+import 'package:my_portfolio/pages/shared/intro/whole_intro.dart';
+import '../../../utils/app_color.dart';
+import '../../../utils/dimensions.dart';
 
 
 class BodyScreen extends StatelessWidget {

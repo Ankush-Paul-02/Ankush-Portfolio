@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
-import '../../utils/app_text_style.dart';
+import '../../../utils/app_text_style.dart';
 
 class MenuOption extends StatelessWidget {
   const MenuOption({

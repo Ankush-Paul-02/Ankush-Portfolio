@@ -1,8 +1,8 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../utils/app_color.dart';
-import '../../utils/dimensions.dart';
+import '../../../utils/app_color.dart';
+import '../../../utils/dimensions.dart';
 
 class SocialButton extends StatefulWidget {
   const SocialButton({

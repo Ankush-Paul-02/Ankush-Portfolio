@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/pages/widgets/nav_menu_tile.dart';
 import 'package:my_portfolio/utils/app_color.dart';
 import 'package:my_portfolio/utils/dimensions.dart';
 import 'package:rive/rive.dart';
-import '../../models/rive_assets.dart';
-import '../../utils/rive_utils.dart';
+import '../../../models/rive_assets.dart';
+import '../../../utils/rive_utils.dart';
+import 'nav_menu_tile.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({

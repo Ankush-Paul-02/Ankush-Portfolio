@@ -3,7 +3,7 @@ import 'package:my_portfolio/utils/app_color.dart';
 import 'package:my_portfolio/utils/app_text_style.dart';
 import 'package:my_portfolio/utils/dimensions.dart';
 import 'package:rive/rive.dart';
-import '../../models/rive_assets.dart';
+import '../../../models/rive_assets.dart';
 
 class NavMenuTile extends StatelessWidget {
   const NavMenuTile({

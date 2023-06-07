@@ -1,16 +1,15 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/pages/widgets/body_screen.dart';
-import 'package:my_portfolio/pages/widgets/drawer_screen.dart';
-import 'package:my_portfolio/pages/widgets/header.dart';
-import 'package:my_portfolio/pages/widgets/leading_logo.dart';
-import 'package:my_portfolio/pages/widgets/menu_button.dart';
+import 'package:my_portfolio/pages/shared/body/body_screen.dart';
+import 'package:my_portfolio/pages/shared/drawer/drawer_screen.dart';
+import 'package:my_portfolio/pages/shared/appbar/header.dart';
+import 'package:my_portfolio/pages/shared/appbar/leading_logo.dart';
+import 'package:my_portfolio/pages/shared/drawer/menu_button.dart';
 import 'package:my_portfolio/utils/rive_utils.dart';
 import 'package:rive/rive.dart';
-import '../models/rive_assets.dart';
-import '../utils/app_color.dart';
-import '../utils/dimensions.dart';
+import '../../models/rive_assets.dart';
+import '../../utils/app_color.dart';
+import '../../utils/dimensions.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

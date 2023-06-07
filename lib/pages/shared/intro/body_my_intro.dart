@@ -1,10 +1,10 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/pages/widgets/social_pages.dart';
+import 'package:my_portfolio/pages/shared/social/social_pages.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import '../../utils/app_text_style.dart';
-import '../../utils/dimensions.dart';
+import '../../../utils/app_text_style.dart';
+import '../../../utils/dimensions.dart';
 
 class BodyMyIntro extends StatelessWidget {
   const BodyMyIntro({
